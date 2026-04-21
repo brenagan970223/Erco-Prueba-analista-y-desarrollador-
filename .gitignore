@@ -1,11 +1,11 @@
 # Entornos virtuales
 venv/
 env/
-.env
+# Archivos .env (Desbloqueado a petición para que los evaluadores lo tengan directo)
+# .env
 
-# Base de datos generada (se reconstruye en local vía etl.py)
-facturacion.db
-*.sqlite3
+# Base de datos (Desbloqueada para pruebas out-of-the-box)
+# facturacion.db
 
 # Python Cache
 __pycache__/
