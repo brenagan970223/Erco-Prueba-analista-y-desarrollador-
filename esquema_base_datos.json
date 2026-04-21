@@ -1,0 +1,66 @@
+{
+  "proyecto": "Liquidador AGPE - Erco",
+  "version": "1.0",
+  "database_type": "Relacional (SQLite / PostgreSQL)",
+  "tablas": [
+    {
+      "nombre": "tariffs",
+      "descripcion": "Maestro tarifario cruzando mercado, nivel de tensión y un CDI opcional.",
+      "columnas": [
+        {"nombre": "id_market", "tipo": "INTEGER", "llave_primaria": true},
+        {"nombre": "voltage_level", "tipo": "INTEGER", "llave_primaria": true},
+        {"nombre": "cdi", "tipo": "INTEGER", "llave_primaria": true, "nulo_permitido": true},
+        {"nombre": "G", "tipo": "FLOAT"},
+        {"nombre": "T", "tipo": "FLOAT"},
+        {"nombre": "D", "tipo": "FLOAT"},
+        {"nombre": "R", "tipo": "FLOAT"},
+        {"nombre": "C", "tipo": "FLOAT"},
+        {"nombre": "P", "tipo": "FLOAT"},
+        {"nombre": "CU", "tipo": "FLOAT"}
+      ]
+    },
+    {
+      "nombre": "services",
+      "descripcion": "Clientes/Generadores y sus condiciones de red técnica.",
+      "columnas": [
+        {"nombre": "id_service", "tipo": "INTEGER", "llave_primaria": true},
+        {"nombre": "id_market", "tipo": "INTEGER", "llave_foranea": "tariffs.id_market"},
+        {"nombre": "voltage_level", "tipo": "INTEGER", "llave_foranea": "tariffs.voltage_level"},
+        {"nombre": "cdi", "tipo": "INTEGER", "nulo_permitido": true, "llave_foranea": "tariffs.cdi"}
+      ]
+    },
+    {
+      "nombre": "records",
+      "descripcion": "Firma de tiempo central para cada evento medido por cliente.",
+      "columnas": [
+        {"nombre": "id_record", "tipo": "VARCHAR", "llave_primaria": true},
+        {"nombre": "id_service", "tipo": "INTEGER", "llave_foranea": "services.id_service"},
+        {"nombre": "record_timestamp", "tipo": "DATETIME"}
+      ]
+    },
+    {
+      "nombre": "consumption",
+      "descripcion": "Flujo de energía gastada (Importada de la red). 1 a 1 con records.",
+      "columnas": [
+        {"nombre": "id_record", "tipo": "VARCHAR", "llave_foranea": "records.id_record"},
+        {"nombre": "value", "tipo": "FLOAT", "unidad": "kWh"}
+      ]
+    },
+    {
+      "nombre": "injection",
+      "descripcion": "Flujo de energía sobrante inyectada a la red por el panel solar.",
+      "columnas": [
+        {"nombre": "id_record", "tipo": "VARCHAR", "llave_foranea": "records.id_record"},
+        {"nombre": "value", "tipo": "FLOAT", "unidad": "kWh"}
+      ]
+    },
+    {
+      "nombre": "xm_data",
+      "descripcion": "Precios de la bolsa operados por el ente regulador (XM).",
+      "columnas": [
+        {"nombre": "record_timestamp", "tipo": "DATETIME", "llave_primaria": true},
+        {"nombre": "value", "tipo": "FLOAT", "unidad": "COP/kWh"}
+      ]
+    }
+  ]
+}

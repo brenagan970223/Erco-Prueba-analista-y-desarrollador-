@@ -1,0 +1,20 @@
+# Entornos virtuales
+venv/
+env/
+.env
+
+# Base de datos generada (se reconstruye en local vía etl.py)
+facturacion.db
+*.sqlite3
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# IDEs
+.vscode/
+.cursor/
+
+# Archivos de SO
+.DS_Store
+Thumbs.db
