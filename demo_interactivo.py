@@ -25,6 +25,13 @@ def demo_interactivo():
     
     # ------------------ PASO 1 ------------------
     print_title("PASO 1: Ingesta ETL en vivo")
+    
+    # IMPORTANTE: Borramos la base de datos vieja para que no de error de registros duplicados
+    db_path = "facturacion.db"
+    if os.path.exists(db_path):
+        os.remove(db_path)
+        print("🗑️ Base de datos anterior borrada. Reconstruyendo desde cero...")
+        
     subprocess.run([sys.executable, "etl.py"])
     print("\n✅ Base de datos reconstruida y cruzada.")
     wait_for_enter("ENTER para Validar la Integridad Referencial de los datos...")
